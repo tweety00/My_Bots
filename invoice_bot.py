@@ -13,9 +13,8 @@ from datetime import datetime
 import os
 
 # ========== اعدادات ==========
-TOKEN = "8863744686:AAGEh0R4pNjugsGPtAU46pGKMst36yPqxuY"
-AUTHORIZED_USER = 1550117523
-
+TOKEN = os.environ.get("8863744686:AAGEh0R4pNjugsGPtAU46pGKMst36yPqxuY")
+AUTHORIZED_USER = int(os.environ.get("AUTHORIZED_USER", 1550117523))
 # ========== الألوان ==========
 GOLD = colors.HexColor('#C9A84C')
 DARK_GOLD = colors.HexColor('#8B6914')
@@ -563,10 +562,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         context.user_data.clear()
         await query.edit_message_text("❌ ملغى / Annulé\n\nاكتب /start من جديد")
 
-app = Application.builder().token(TOKEN).build()
+app = Application.builder().token("8863744686:AAGEh0R4pNjugsGPtAU46pGKMst36yPqxuY").build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CallbackQueryHandler(button))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
 print("Invoice Bot is running!")
+
 app.run_polling()
